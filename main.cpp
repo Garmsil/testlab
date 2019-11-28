@@ -2,6 +2,7 @@
 #include <vector>
 #include <stdexcept>
 #include <iomanip>
+#include <cmath>
 
 using std::vector;
 
@@ -95,6 +96,45 @@ vector<double> solve(dmatrix matrix) {
     }
 
     return x;
+}
+
+// числа с плавающей точкой должны сравниваться с учетом погрешности
+bool doubleEqual(double d1, double d2) {
+    return std::abs(d1 - d2) < 0.00001;
+}
+
+void runTest(const dmatrix &input,
+             const vector<double> &expected) {
+    // номер теста
+    static int testNumber = 0;
+
+    ++testNumber;
+
+    auto result = solve(input);
+
+    // флаг правильности теста
+    bool isOk = true;
+
+    if (expected.size() == result.size()) {
+        for (size_t i = 0; i < expected.size(); ++i) {
+            if (doubleEqual(expected[i], result[i])) {
+                isOk = false;
+                break;
+            }
+        }
+    } else {
+        isOk = false;
+    }
+
+    std::cout << "[TEST " << testNumber << "] ";
+
+    if (isOk) {
+        std::cout << "OK";
+    } else {
+        std::cout << "FAILED";
+    }
+
+    std::cout << std::endl;
 }
 
 int main() {
