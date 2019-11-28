@@ -5,6 +5,7 @@
 #include <cmath>
 
 using std::vector;
+using std::pair;
 
 using dmatrix = vector<vector<double>>;
 
@@ -138,20 +139,40 @@ void runTest(const dmatrix &input,
 }
 
 int main() {
-    dmatrix matrix{
-        {5, -13, 13, -5, -10, -14},
-        {5, -7, 12, 6, 6, 57},
-        {-8, 11, 1, -8, -1, 101},
-        {-1, 5, -9, -7, 13, -43},
-        {8, -1, -2, -10, -5, -82},
-        };
+    vector<pair<dmatrix, vector<double>>> testCases;
 
-    auto result = solve(matrix);
+    testCases.emplace_back(dmatrix{{5, -13, 13, -5, -10, -14},
+                                   {5, -7, 12, 6, 6, 57},
+                                   {-8, 11, 1, -8, -1, 101},
+                                   {-1, 5, -9, -7, 13, -43},
+                                   {8, -1, -2, -10, -5, -82}},
+                           vector<double>{-4, 7, 9, 2, 1});
 
-    printMatrix(matrix);
+    testCases.emplace_back(dmatrix{{2, -2, -4, -2, 3, -22},
+                                   {8, 8, -6, -7, -4, -72},
+                                   {4, -3, -1, -8, 2, -15},
+                                   {10, -5, 4, 1, 7, 69},
+                                   {-7, -5, 7, 3, -6, 70}},
+                           vector<double>{3, -5, 6, 4, -2});
 
-    std::cout << "Equation system solved!" << std::endl;
-    printResult(result);
+    testCases.emplace_back(dmatrix{{3, 1, 5, -2, 3, 35},
+                                   {4, 3, -7, 5, 6, 54},
+                                   {-7, 5, 4, 1, -1, -96},
+                                   {1, 4, 1, -3, -10, -71},
+                                   {6, -9, -8, -8, -2, 59}},
+                           vector<double>{10, -7, 2, 5, 4});
+
+    testCases.emplace_back(dmatrix{{3, 1, 5, -2, 3, 35},
+                                   {4, 3, -7, 5, 6, 54},
+                                   {-7, 5, 4, 1, -1, -96},
+                                   {1, 4, 1, -3, -10, -71},
+                                   {6, -9, -8, -8, -2, 59}},
+                           vector<double>{0, 0, 0, 0, 0});
+
+
+    for (size_t i = 0; i < testCases.size(); ++i) {
+        runTest(testCases[i].first, testCases[i].second);
+    }
 
     return 0;
 }
