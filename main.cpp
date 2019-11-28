@@ -117,7 +117,7 @@ void runTest(const dmatrix &input,
 
     if (expected.size() == result.size()) {
         for (size_t i = 0; i < expected.size(); ++i) {
-            if (doubleEqual(expected[i], result[i])) {
+            if (!doubleEqual(expected[i], result[i])) {
                 isOk = false;
                 break;
             }
