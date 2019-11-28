@@ -52,11 +52,7 @@ vector<double> solve(dmatrix matrix) {
         throw std::runtime_error("Incorrect matrix dimensions");
     }
 
-    std::cout << "Source matrix:" << std::endl;
-    printMatrix(matrix);
-
     for (size_t i = 0; i < matrix.size(); ++i) {
-        std::cout << "[Iteration " << i + 1 << "]" << std::endl;
         // поиск максимального элемента
         size_t jmax = i;
 
@@ -71,29 +67,16 @@ vector<double> solve(dmatrix matrix) {
             throw std::runtime_error("Unsolvable matrix");
         }
 
-        std::cout << "Maximum module of " << i << " column is " << matrix[jmax][i]
-                  << " in row " << jmax << std::endl;
-
         if (jmax != i) {
-            std::cout << "Swapping rows " << i << " and " << jmax << std::endl;
-
             // перемещение строки с максимальным элементов наверх
             std::swap(matrix[i], matrix[jmax]);
-
-            printMatrix(matrix);
         }
 
-
-        std::cout << "Normalizing row " << i << " with division by " << matrix[i][i] << std::endl;
         // нормализация строки
         for (size_t j = i + 1; j < matrix.front().size(); ++j) {
             matrix[i][j] /= matrix[i][i];
         }
         matrix[i][i] = 1;
-
-        printMatrix(matrix);
-
-        std::cout << "Subtracting row " << i << " from others" << std::endl;
         // вычитание текущей строки из остальных
         for (size_t j = 0; j < matrix.size(); ++j) {
             if (i != j) {
@@ -103,8 +86,6 @@ vector<double> solve(dmatrix matrix) {
                 matrix[j][i] = 0;
             }
         }
-
-        printMatrix(matrix);
     }
 
     vector<double> x(matrix.size());
@@ -126,6 +107,8 @@ int main() {
         };
 
     auto result = solve(matrix);
+
+    printMatrix(matrix);
 
     std::cout << "Equation system solved!" << std::endl;
     printResult(result);
