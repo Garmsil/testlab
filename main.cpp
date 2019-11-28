@@ -116,6 +116,40 @@ vector<double> solve(dmatrix matrix) {
     return x;
 }
 
+void runTest(const dmatrix &input,
+             const vector<double> &expected) {
+    // номер теста
+    static int testNumber = 0;
+
+    ++testNumber;
+
+    auto result = solve(input);
+
+    // флаг правильности теста
+    bool isOk = true;
+
+    if (expected.size() == result.size()) {
+        for (size_t i = 0; i < expected.size(); ++i) {
+            if (expected[i] != result[i]) {
+                isOk = false;
+                break;
+            }
+        }
+    } else {
+        isOk = false;
+    }
+
+    std::cout << "[TEST " << testNumber << "] ";
+
+    if (isOk) {
+        std::cout << "OK";
+    } else {
+        std::cout << "FAILED";
+    }
+
+    std::cout << std::endl;
+}
+
 int main() {
     dmatrix matrix{
         {5, -13, 13, -5, -10, -14},
