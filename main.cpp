@@ -130,12 +130,21 @@ void runTest(const dmatrix &input,
     std::cout << "[TEST " << testNumber << "] ";
 
     if (isOk) {
-        std::cout << "OK";
+        std::cout << "OK" << std::endl;
     } else {
-        std::cout << "FAILED";
-    }
+        std::cout << "FAILED" << std::endl;
+        std::cout << "On input:" << std::endl;
 
-    std::cout << std::endl;
+        printMatrix(input);
+
+        std::cout << "Expected result:" << std::endl;
+
+        printResult(expected);
+
+        std::cout << "Actual result:" << std::endl;
+
+        printResult(result);
+    }
 }
 
 int main() {
